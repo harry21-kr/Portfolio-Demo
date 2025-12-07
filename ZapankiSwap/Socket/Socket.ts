@@ -7,6 +7,9 @@ const useLiveBets = () => {
     account ? truncateHash(account, 5, 4) : "0x"
   );
 
+  // 새로운 게임 내역이 도착했을때 실행되는 함수
+  // RTK를 사용해 게임 결과를 저장
+  // useCallback()을 사용해 유저가 바뀔때를 대비
   const onNewBet = useCallback(
     (bet: LiveBetResponse) => {
       if (bet.playerAddress === account) {
@@ -36,11 +39,13 @@ const useLiveBets = () => {
     [dispatch, account, nickname]
   );
 
+  // 기존 게임 내역 가져오기
   useEffect(() => {
     dispatch(fetchBetHistory());
     dispatch(fetchCanRaceMultiplierResults());
   }, [dispatch]);
 
+  // 소켓 연결
   useEffect(() => {
     if (socket.current == null) {
       socket.current = io(ZAPANKISWAP_API_SERVER, {
@@ -49,11 +54,13 @@ const useLiveBets = () => {
     }
   }, []);
 
+  // bet_v2 이벤트 구독 및 관리
   useEffect(() => {
     socket.current?.on("bet_v2", onNewBet);
     return () => {
       socket.current?.off("bet_v2", onNewBet);
     };
+    // onNewBet(유저 변경 시) 기존 이벤트 해제 후 재구독
   }, [onNewBet]);
 };
 
