@@ -22,7 +22,7 @@ game 파라미터에 따라 새로운 selector를 생성하고,
 중복된 게임에 대한 데이터는 캐싱하여 성능을 최적화합니다.
 만약 게임의 종류가 주어지지 않는다면, 모든 게임 내역을 선택하는 selector를 생성합니다.
 
-### liveBet/hooks.ts
+### /liveBet/hooks.ts
 
 selector로 선택한 게임 내역을 간편하게 사용할 수 있도록 만든 커스텀 훅입니다.
 useMemo를 사용하여 매 렌더링마다 새로운 selector가 생성되는 것을 방지하고,
