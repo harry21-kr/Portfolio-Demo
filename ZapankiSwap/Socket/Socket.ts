@@ -42,7 +42,6 @@ const useLiveBets = () => {
   // 기존 게임 내역 가져오기
   useEffect(() => {
     dispatch(fetchBetHistory());
-    dispatch(fetchCanRaceMultiplierResults());
   }, [dispatch]);
 
   // 소켓 연결
